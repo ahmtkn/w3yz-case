@@ -1,0 +1,82 @@
+version: '3.9'
+services:
+  cntnr_w3yz_nginx:
+    image: 'nginx:latest'
+    container_name: w3yz_nginx
+    hostname: w3yz_nginx
+    restart: "no"
+    depends_on:
+      - cntnr_w3yz_php
+    links:
+      - cntnr_w3yz_php
+    ports:
+      - '8852:80'
+    volumes:
+      - '../projects:/var/www/html'
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf'
+      - './nginx/default.conf:/etc/nginx/conf.d/default.conf'
+  cntnr_w3yz_php:
+    build: php
+    container_name: w3yz_php
+    hostname: w3yz_php
+    restart: "no"
+    links:
+      - cntnr_w3yz_mysql
+      - cntnr_w3yz_phpmyadmin
+      - cntnr_w3yz_redis
+      - cntnr_w3yz_memcached
+    volumes:
+      - '../projects:/var/www/html'
+      - './php/php.ini:/usr/local/etc/php/php.ini'
+    ports:
+      - '8853:9000'
+  cntnr_w3yz_mysql:
+    image: 'mysql:8.0'
+    container_name: w3yz_mysql
+    hostname: w3yz_mysql
+    restart: "no"
+    command: '--default-authentication-plugin=mysql_native_password'
+    ports:
+      - '8854:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  cntnr_w3yz_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: w3yz_phpmyadmin
+    hostname: w3yz_phpmyadmin
+    restart: "no"
+    depends_on:
+      - cntnr_w3yz_mysql
+    links:
+      - cntnr_w3yz_mysql
+    ports:
+      - '8855:80'
+    environment:
+      - PMA_HOST=w3yz_mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    volumes:
+      - './phpmyadmin/php.ini:/usr/local/etc/php/php.ini'
+  cntnr_w3yz_redis:
+    image: 'redis:latest'
+    container_name: w3yz_redis
+    hostname: w3yz_redis
+    restart: "no"
+    command:
+      - redis-server
+      - '--appendonly'
+      - 'yes'
+    ports:
+      - '8856:6379'
+    volumes:
+      - './redis/data:/data'
+  cntnr_w3yz_memcached:
+    image: 'memcached:latest'
+    container_name: w3yz_memcached
+    hostname: w3yz_memcached
+    restart: "no"
+    ports:
+      - '8857:11211'
