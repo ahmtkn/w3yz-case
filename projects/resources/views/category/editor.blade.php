@@ -15,6 +15,9 @@
 									<p class="lead mb-0">Kategoriler</p>
 								</div>
 								<div class="card-body">
+                                    @error('parent_id')
+                                    <p class="alert alert-danger rounded-0 mb-0 p-1">{{ $message }}</p>
+                                    @enderror
 								@include('category.treeview',['name' => 'parent_id', 'display' => 'list', 'type' => 'radio', 'selected' => $category->parent_id ?? '', 'categories' => $categories])
 								</div>
 							</div>
@@ -25,8 +28,11 @@
                                     <label class="col-sm-12 col-form-label" for="name">Name</label>
                                     <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="name" name="name" value="{{ $category->name ?? "" }}" placeholder="Name" />
+                                            <input type="text" class="form-control" id="name" name="name" value="{{ $category->name ?? "" }}" placeholder="Name" required/>
                                         </div>
+                                        @error('name')
+                                        <p class="alert alert-danger rounded-0 mb-0 p-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </fieldset>

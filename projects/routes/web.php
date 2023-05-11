@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\PostController::class,'index'])->name('post.index');
+
 
 Route::group(['prefix' => 'post', 'as' => 'post.'], function (){
-    Route::get('/', [\App\Http\Controllers\PostController::class,'index'])->name('index');
     Route::get('/create', [\App\Http\Controllers\PostController::class,'create'])->name('create');
     Route::post('/', [\App\Http\Controllers\PostController::class,'store'])->name('store');
 

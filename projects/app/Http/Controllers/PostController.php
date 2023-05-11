@@ -33,7 +33,7 @@ class PostController extends Controller
     public function store(PostStoreRequest $request)
     {
         $this->service->store($request->validated());
-        return redirect()->route('post.index')->withSuccess(__('blog/category.text_success'));
+        return redirect()->route('post.index');
     }
 
     public function edit(Post $post)
@@ -50,13 +50,13 @@ class PostController extends Controller
     public function update(PostUpdateRequest $request, Post $post)
     {
         $this->service->update($post, $request->validated());
-        return redirect()->route('post.index')->withSuccess(__('category.text_success'));
+        return redirect()->route('post.index');
     }
 
     public function destroy(Post $post)
     {
         $this->service->delete($post);
-        return redirect()->route('post.index')->withSuccess(__('category.text_success'));
+        return redirect()->route('post.index');
     }
 
 }

@@ -32,7 +32,7 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
         $this->service->store($request->validated());
-        return redirect()->route('category.index')->withSuccess(__('blog/category.text_success'));
+        return redirect()->route('category.index');
     }
 
     public function edit(Category $category)
@@ -48,13 +48,13 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, Category $category)
     {
         $this->service->update($category, $request->validated());
-        return redirect()->route('category.index')->withSuccess(__('category.text_success'));
+        return redirect()->route('category.index');
     }
 
     public function destroy(Category $category)
     {
        $this->service->delete($category);
-       return redirect()->route('category.index')->withSuccess(__('category.text_success'));
+       return redirect()->route('category.index');
     }
 
 }

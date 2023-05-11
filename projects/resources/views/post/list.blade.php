@@ -23,6 +23,7 @@
                     <thead>
                     <tr class="headline">
                         <th class="text-start">Title</th>
+                        <th class="text-start">Text</th>
                         <th class="text-end" width="220">Tarih</th>
                         <th class="text-center" width="50">Kategori</th>
                         <th class="text-center thPass" width="5"></th>
@@ -33,6 +34,9 @@
                         <tr>
                             <td class="text-start">
                                 <p class="fs-6 fw-bold">{{ $post->title }}</p>
+                            </td>
+                            <td class="text-start">
+                                <p class="fs-6 fw-bold">{{ $post->text ?? "" }}</p>
                             </td>
                             <td class="text-start">
                                 <p class="fs-6 border-bottom">Oluşturulma: <span class="fw-bold float-end">{{ date('d/m/Y', strtotime($post->created_at)) }}</span></p>
