@@ -5,7 +5,6 @@ namespace App\Repositories\Concretes;
 
 use App\Models\Post;
 use App\Repositories\Abstractions\PostRepository;
-use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -59,8 +58,6 @@ class PostRepositoryElequent implements PostRepository
     {
         return $this->model->find($id)->delete();
     }
-
-
 
     private function putFile(array $data)
     {
